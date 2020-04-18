@@ -214,7 +214,7 @@ const invalidCustomImport = [
     },
   },
   {
-    title: 'supports module imports',
+    title: 'supports linting module imports',
     code: `import * as RN from 'react-native';
   const { Image } = RN;
   
@@ -226,6 +226,28 @@ const invalidCustomImport = [
     parserOptions: {
       sourceType: 'module',
     },
+  },
+  {
+    title:
+      'supports linting on Custom Invertable ImageComponents without react-native imported',
+    code: `import { FastImage } from './fast-image'
+  
+  const Component = (props) => (
+    <>
+      <FastImage />
+      <FastImage accessibilityIgnoresInvertColors={'true'} />
+    </>
+  );
+  `,
+    errors: [missingPropError, typeError],
+    parserOptions: {
+      sourceType: 'module',
+    },
+    options: [
+      {
+        invertableComponents: ['FastImage'],
+      },
+    ],
   },
 ];
 

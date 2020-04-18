@@ -205,9 +205,23 @@ const invalidCustomImport = [
     title: 'should fail',
     code: `import React from 'react'
     import { Image } from 'react-native';
-    
+
     export const RNImage = (props) => <Image source={props.source} />
     `,
+    errors: [missingPropError],
+    parserOptions: {
+      sourceType: 'module',
+    },
+  },
+  {
+    title: 'supports module imports',
+    code: `import * as RN from 'react-native';
+  const { Image } = RN;
+  
+  const Component = (props) => (
+    <Image source={props.source} />
+  );
+  `,
     errors: [missingPropError],
     parserOptions: {
       sourceType: 'module',

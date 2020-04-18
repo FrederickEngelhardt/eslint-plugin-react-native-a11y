@@ -72,6 +72,20 @@ module.exports = {
       }
     }
 
+    // avoid directly mutating a constant as it ends up stacking up duplicate strings
+    const elementsToCheck = !hasCustomImage
+      ? [...defaultInvertableComponents]
+      : [];
+    if (options.length > 0) {
+      const { invertableComponents } = options[0];
+      if (invertableComponents) {
+        elementsToCheck.push(...invertableComponents);
+      }
+    } else if (hasCustomImage) {
+      // Exit process if there is nothing to check
+      // return {};
+    }
+
     return {
       JSXElement: (node: JSXElement) => {
         /**
@@ -91,20 +105,6 @@ module.exports = {
               'accessibilityIgnoresInvertColors prop is not a boolean value',
           });
         } else {
-          // avoid directly mutating a constant as it ends up stacking up duplicate strings
-          const elementsToCheck = !hasCustomImage
-            ? [...defaultInvertableComponents]
-            : [];
-          if (options.length > 0) {
-            const { invertableComponents } = options[0];
-            if (invertableComponents) {
-              elementsToCheck.push(...invertableComponents);
-            }
-          } else if (hasCustomImage) {
-            console.log('EXITED EARLY', node.openingElement.name.name);
-            return;
-          }
-
           const type = elementType(openingElement);
 
           if (

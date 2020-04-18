@@ -70,16 +70,16 @@ module.exports = {
   create: ({ options, report, getSourceCode }: ESLintContext) => {
     // Checks to see if there are valid imports and if so verifies that those imports related to 'react-native' or if a custom module exists
     const { text } = getSourceCode();
-    let hasCustomImage = false;
+    let hasImageImportAlias = false;
     if (text.match(new RegExp(/import/, 'g'))) {
       const hasReactNativeImage = verifyReactNativeImage(text);
       if (!hasReactNativeImage) {
-        hasCustomImage = true;
+        hasImageImportAlias = true;
       }
     }
 
     // avoid directly mutating a constant as it ends up stacking up duplicate strings
-    const elementsToCheck = !hasCustomImage
+    const elementsToCheck = !hasImageImportAlias
       ? [...defaultInvertableComponents]
       : [];
     if (options.length > 0) {
@@ -87,21 +87,25 @@ module.exports = {
       if (invertableComponents) {
         elementsToCheck.push(...invertableComponents);
       }
-    } else if (hasCustomImage) {
+    } else if (hasImageImportAlias && options.length === 0) {
       // Exit process if there is nothing to check
-      // return {};
+      return {};
     }
 
     return {
       JSXElement: (node: JSXElement) => {
-        /**
-         * @description RegExp to select single or multiline 'Image' component and determine if the import origin path is 'react-native' or a custom module
-         *  */
         // $FlowFixMe
         const { children, openingElement, parent } = node;
 
+        // $FlowFixMe
+        const { name } = openingElement.name;
+
+        // escape out if the item is an ignored JSXElement
+        if (hasImageImportAlias && name === 'Image') {
+          return;
+        }
+
         if (
-          !hasCustomImage &&
           hasProp(openingElement.attributes, propName) &&
           !isNodePropValueBoolean(getProp(openingElement.attributes, propName))
         ) {

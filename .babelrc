@@ -1,14 +1,13 @@
 {
   "presets": [
     [
-      "@babel/preset-env", {
+      "@babel/preset-env",
+      {
         "targets": {
-          "node": "4"
+          "node": "12"
         }
       }
     ]
   ],
-  "plugins": [
-    "@babel/transform-flow-strip-types",
-  ]
+  "plugins": ["@babel/transform-flow-strip-types"]
 }

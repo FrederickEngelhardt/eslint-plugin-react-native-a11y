@@ -83,7 +83,7 @@ module.exports = {
       }
     } else if (hasCustomImage) {
       // Exit process if there is nothing to check
-      // return {};
+      return {};
     }
 
     return {

@@ -22,8 +22,17 @@ describe('all rule files should be exported by the plugin', () => {
 });
 
 describe('configurations', () => {
-  it("should export a 'recommended' configuration", () => {
-    assert(plugin.configs.recommended);
+  it("should export a 'basic' config", () => {
+    assert(plugin.configs.basic);
+  });
+  it("should export a 'ios' config", () => {
+    assert(plugin.configs.basic);
+  });
+  it("should export a 'android' config", () => {
+    assert(plugin.configs.basic);
+  });
+  it("should export a 'all' config", () => {
+    assert(plugin.configs.basic);
   });
 });
 

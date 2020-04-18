@@ -45,9 +45,15 @@ const verifyReactNativeImage = (text: string): boolean => {
     })
     .join('');
 
+  // Flow has issues with String.raw
+  // $FlowFixMe
+  const namedSelector = String.raw`(import\s{)(.*)(\bImage\b)(.*)(}\sfrom\s'react-native')`;
+  // $FlowFixMe
+  const moduleSelector = String.raw`(import\s\*\sas\s)([a-zA-Z0-9_]\w)(\sfrom\s)('react-native')`;
+
   const imageSourceReactNativeRegExp = new RegExp(
-    `(?=import)(.*)(?={)(.*)(?<=${invertibleOptions})(.*)(.})(.*)(?=from)(.*)(?='react-native')`,
-    's'
+    `${moduleSelector}|${namedSelector}`,
+    'gs'
   );
 
   const hasReactNativeImage = text.match(imageSourceReactNativeRegExp);

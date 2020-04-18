@@ -26,13 +26,13 @@ describe('configurations', () => {
     assert(plugin.configs.basic);
   });
   it("should export a 'ios' config", () => {
-    assert(plugin.configs.basic);
+    assert(plugin.configs.ios);
   });
   it("should export a 'android' config", () => {
-    assert(plugin.configs.basic);
+    assert(plugin.configs.android);
   });
   it("should export a 'all' config", () => {
-    assert(plugin.configs.basic);
+    assert(plugin.configs.all);
   });
 });
 

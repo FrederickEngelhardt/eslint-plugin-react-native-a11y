@@ -69,191 +69,203 @@ const validCustomImport = [
   },
 ];
 
-const invalidCustomImport = [
-  {
-    title:
-      'throws a missing prop error for custom components alongside passing Image that is imported from react-native',
-    code: `import {
-    Image,
-    Button,
-    FlatList,
-    Platform,
-    ScrollView,
-    View,
-  } from 'react-native';
-  import FastImage from './components/FastImage'
-  const Component = () => (
-    <View>
-      <FastImage accessibilityIgnoresInvertColors />
-      <Image />
-    </View>
-  );`,
-    errors: [missingPropError],
-    options: [
-      {
-        invertableComponents: ['FastImage'],
-      },
-    ],
-    parserOptions: {
-      sourceType: 'module',
-    },
-  },
-  {
-    title:
-      'throws a missingPropError for invertibleComponents and type error for Image when it is imported from react-native',
-    code: `import {
-    Image,
-    Button,
-    FlatList,
-    Platform,
-    ScrollView,
-    View,
-  } from 'react-native';
-  import FastImage from './components/FastImage'
-  const Component = () => (
-    <View>
-      <FastImage />
-      <Image accessibilityIgnoresInvertColors={'true'} />
-    </View>
-  );`,
-    errors: [missingPropError, typeError],
-    options: [
-      {
-        invertableComponents: ['FastImage'],
-      },
-    ],
-    parserOptions: {
-      sourceType: 'module',
-    },
-  },
-  {
-    title: 'can throw multiple errors for custom and normal Image components',
-    code: `import {
-    Image,
-    Button,
-    FlatList,
-    Platform,
-    ScrollView,
-    View,
-  } from 'react-native';
-  import FastImage from './components/FastImage'
-  const Component = () => (
-    <View>
-      <FastImage />
-      <FastImage accessibilityIgnoresInvertColors={'true'} />
-      <FastImage accessibilityIgnoresInvertColors={'false'} />
-      <Image />
-      <Image accessibilityIgnoresInvertColors={'true'} />
-      <Image accessibilityIgnoresInvertColors={'false'} />
-    </View>
-  );`,
-    errors: [
-      missingPropError,
-      typeError,
-      typeError,
-      missingPropError,
-      typeError,
-      typeError,
-    ],
-    options: [
-      {
-        invertableComponents: ['FastImage'],
-      },
-    ],
-    parserOptions: {
-      sourceType: 'module',
-    },
-  },
+const valid = [
+  // { code: '<View accessibilityIgnoresInvertColors></View>;' },
+  // { code: '<View accessibilityIgnoresInvertColors={true}></View>' },
+  // { code: '<View accessibilityIgnoresInvertColors={false}></View>' },
+  // {
+  //   code: '<ScrollView accessibilityIgnoresInvertColors></ScrollView>',
+  // },
+  // {
+  //   code: '<Image accessibilityIgnoresInvertColors />',
+  // },
+  // {
+  //   code: '<View accessibilityIgnoresInvertColors><Image /></View>',
+  // },
+  // {
+  //   code:
+  //     '<View accessibilityIgnoresInvertColors><View><Image /></View></View>',
+  // },
+  // {
+  //   code: '<View><View /></View>',
+  // },
+  // {
+  //   code: '<FastImage accessibilityIgnoresInvertColors />',
+  //   options: [
+  //     {
+  //       invertableComponents: ['FastImage'],
+  //     },
+  //   ],
+  // },
+  // {
+  //   code: `const invertColors = true;
+  //          const Component = () => (
+  //            <Image accessibilityIgnoresInvertColors={invertColors} />
+  //          );`,
+  // },
+  // ...validCustomImport,
 ];
 
-const valid = [
-  { code: '<View accessibilityIgnoresInvertColors></View>;' },
-  { code: '<View accessibilityIgnoresInvertColors={true}></View>' },
-  { code: '<View accessibilityIgnoresInvertColors={false}></View>' },
+const invalidCustomImport = [
+  // {
+  //   title:
+  //     'throws a missing prop error for custom components alongside passing Image that is imported from react-native',
+  //   code: `import {
+  //   Image,
+  //   Button,
+  //   FlatList,
+  //   Platform,
+  //   ScrollView,
+  //   View,
+  // } from 'react-native';
+  // import FastImage from './components/FastImage'
+  // const Component = () => (
+  //   <View>
+  //     <FastImage accessibilityIgnoresInvertColors />
+  //     <Image />
+  //   </View>
+  // );`,
+  //   errors: [missingPropError],
+  //   options: [
+  //     {
+  //       invertableComponents: ['FastImage'],
+  //     },
+  //   ],
+  //   parserOptions: {
+  //     sourceType: 'module',
+  //   },
+  // },
+  // {
+  //   title:
+  //     'throws a missingPropError for invertibleComponents and type error for Image when it is imported from react-native',
+  //   code: `import {
+  //   Image,
+  //   Button,
+  //   FlatList,
+  //   Platform,
+  //   ScrollView,
+  //   View,
+  // } from 'react-native';
+  // import FastImage from './components/FastImage'
+  // const Component = () => (
+  //   <View>
+  //     <FastImage />
+  //     <Image accessibilityIgnoresInvertColors={'true'} />
+  //   </View>
+  // );`,
+  //   errors: [missingPropError, typeError],
+  //   options: [
+  //     {
+  //       invertableComponents: ['FastImage'],
+  //     },
+  //   ],
+  //   parserOptions: {
+  //     sourceType: 'module',
+  //   },
+  // },
+  // {
+  //   title: 'can throw multiple errors for custom and normal Image components',
+  //   code: `import {
+  //   Image,
+  //   Button,
+  //   FlatList,
+  //   Platform,
+  //   ScrollView,
+  //   View,
+  // } from 'react-native';
+  // import FastImage from './components/FastImage'
+  // const Component = () => (
+  //   <View>
+  //     <FastImage />
+  //     <FastImage accessibilityIgnoresInvertColors={'true'} />
+  //     <FastImage accessibilityIgnoresInvertColors={'false'} />
+  //     <Image />
+  //     <Image accessibilityIgnoresInvertColors={'true'} />
+  //     <Image accessibilityIgnoresInvertColors={'false'} />
+  //   </View>
+  // );`,
+  //   errors: [
+  //     missingPropError,
+  //     typeError,
+  //     typeError,
+  //     missingPropError,
+  //     typeError,
+  //     typeError,
+  //   ],
+  //   options: [
+  //     {
+  //       invertableComponents: ['FastImage'],
+  //     },
+  //   ],
+  //   parserOptions: {
+  //     sourceType: 'module',
+  //   },
+  // },
   {
-    code: '<ScrollView accessibilityIgnoresInvertColors></ScrollView>',
+    title: 'should fail',
+    code: `import React from 'react'
+    import { Image } from 'react-native';
+    
+    export const RNImage = (props) => <Image source={props.source} />
+    `,
+    errors: [missingPropError],
+    parserOptions: {
+      sourceType: 'module',
+    },
   },
-  {
-    code: '<Image accessibilityIgnoresInvertColors />',
-  },
-  {
-    code: '<View accessibilityIgnoresInvertColors><Image /></View>',
-  },
-  {
-    code:
-      '<View accessibilityIgnoresInvertColors><View><Image /></View></View>',
-  },
-  {
-    code: '<View><View /></View>',
-  },
-  {
-    code: '<FastImage accessibilityIgnoresInvertColors />',
-    options: [
-      {
-        invertableComponents: ['FastImage'],
-      },
-    ],
-  },
-  {
-    code: `const invertColors = true;
-           const Component = () => (
-             <Image accessibilityIgnoresInvertColors={invertColors} />
-           );`,
-  },
-  ...validCustomImport,
 ];
 
 const invalid = [
-  {
-    code: '<View accessibilityIgnoresInvertColors={"true"}></View>',
-    errors: [typeError],
-  },
-  {
-    code: '<View accessibilityIgnoresInvertColors={"False"}></View>',
-    errors: [typeError],
-  },
-  {
-    code: '<View accessibilityIgnoresInvertColors={0}></View>',
-    errors: [typeError],
-  },
-  {
-    code: `<View accessibilityIgnoresInvertColors={1}>
-      <Image
-        style={{width: 50, height: 50}}
-        source={{uri: 'https://facebook.github.io/react-native/img/tiny_logo.png'}}
-      />
-    </View>`,
-    errors: [typeError, missingPropError],
-  },
-  {
-    code: '<View accessibilityIgnoresInvertColors={{enabled: 1}}></View>',
-    errors: [typeError],
-  },
-  {
-    code: '<View accessibilityIgnoresInvertColors={{value: true}}></View>',
-    errors: [typeError],
-  },
-  {
-    code: '<Image />',
-    errors: [missingPropError],
-  },
-  {
-    code: '<View><Image /></View>',
-    errors: [missingPropError],
-  },
-  {
-    code: '<View><View><Image /></View></View>',
-    errors: [missingPropError],
-  },
-  {
-    code: '<FastImage />',
-    errors: [missingPropError],
-    options: [
-      {
-        invertableComponents: ['FastImage'],
-      },
-    ],
-  },
+  // {
+  //   code: '<View accessibilityIgnoresInvertColors={"true"}></View>',
+  //   errors: [typeError],
+  // },
+  // {
+  //   code: '<View accessibilityIgnoresInvertColors={"False"}></View>',
+  //   errors: [typeError],
+  // },
+  // {
+  //   code: '<View accessibilityIgnoresInvertColors={0}></View>',
+  //   errors: [typeError],
+  // },
+  // {
+  //   code: `<View accessibilityIgnoresInvertColors={1}>
+  //     <Image
+  //       style={{width: 50, height: 50}}
+  //       source={{uri: 'https://facebook.github.io/react-native/img/tiny_logo.png'}}
+  //     />
+  //   </View>`,
+  //   errors: [typeError, missingPropError],
+  // },
+  // {
+  //   code: '<View accessibilityIgnoresInvertColors={{enabled: 1}}></View>',
+  //   errors: [typeError],
+  // },
+  // {
+  //   code: '<View accessibilityIgnoresInvertColors={{value: true}}></View>',
+  //   errors: [typeError],
+  // },
+  // {
+  //   code: '<Image />',
+  //   errors: [missingPropError],
+  // },
+  // {
+  //   code: '<View><Image /></View>',
+  //   errors: [missingPropError],
+  // },
+  // {
+  //   code: '<View><View><Image /></View></View>',
+  //   errors: [missingPropError],
+  // },
+  // {
+  //   code: '<FastImage />',
+  //   errors: [missingPropError],
+  //   options: [
+  //     {
+  //       invertableComponents: ['FastImage'],
+  //     },
+  //   ],
+  // },
   ...invalidCustomImport,
 ];
 
@@ -269,7 +281,7 @@ RuleTester.describe = function (text, method) {
 RuleTester.it = function (text, method) {
   const computedTitle =
     eval(RuleTester.it.title)[RuleTester.testId].title || text;
-  test(`${RuleTester.it.title} ${computedTitle}`, method);
+  test(computedTitle, method);
   RuleTester.testId += 1;
 };
 
